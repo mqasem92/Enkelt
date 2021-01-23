@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enkelt.Connector.AzureBlob"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnkeltBKP.PowerBI", "EnkeltBKP.PowerBI\EnkeltBKP.PowerBI.csproj", "{1787BFB2-2370-4DF8-80C0-5B4B145021FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnkeltBKB.PowerBI.AzureFun", "EnkeltBKB.PowerBI.AzureFun_v2\EnkeltBKB.PowerBI.AzureFun.csproj", "{3D8090A9-8232-4D05-8695-A228E42B9070}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnkeltBKB.PowerBI.AzureFun", "EnkeltBKB.PowerBI.AzureFun\EnkeltBKB.PowerBI.AzureFun.csproj", "{3D8090A9-8232-4D05-8695-A228E42B9070}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
