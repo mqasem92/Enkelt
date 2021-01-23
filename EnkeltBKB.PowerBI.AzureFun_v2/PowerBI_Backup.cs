@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using EnkeltBKP.PowerBI.Model;
 
-namespace EnkeltBKB.PowerBI.AzureFun_v2
+namespace EnkeltBKB.PowerBI.AzureFun
 {
     public class PowerBI_Backup
     {
@@ -40,19 +40,19 @@ namespace EnkeltBKB.PowerBI.AzureFun_v2
                 log.LogInformation("Start validation application settings.");
 
                 if (string.IsNullOrEmpty(PowerBI_ClientID))
-                    return new BadRequestObjectResult("[PowerBI_ClientID] Not found in application setting!");
+                    return new BadRequestObjectResult(string.Format("{\"IsSuccess\":\"0\",\"Message\":\"{0}\"}", "[PowerBI_ClientID] Not found in application setting!"));
 
                 if (string.IsNullOrEmpty(PowerBI_ClientSecret))
-                    return new BadRequestObjectResult("[PowerBI_ClientSecret] Not found in application setting!");
+                    return new BadRequestObjectResult(string.Format("{\"IsSuccess\":\"0\",\"Message\":\"{0}\"}", "[PowerBI_ClientSecret] Not found in application setting!"));
 
                 if (string.IsNullOrEmpty(PowerBI_TenantId))
-                    return new BadRequestObjectResult("[PowerBI_TenantId] Not found in application setting!");
+                    return new BadRequestObjectResult(string.Format("{\"IsSuccess\":\"0\",\"Message\":\"{0}\"}", "[PowerBI_TenantId] Not found in application setting!"));
 
                 if (string.IsNullOrEmpty(BackupBlob_ConnectionString))
-                    return new BadRequestObjectResult("[BackupBlob_ConnectionString] Not found in application setting!");
+                    return new BadRequestObjectResult(string.Format("{\"IsSuccess\":\"0\",\"Message\":\"{0}\"}", "[BackupBlob_ConnectionString] Not found in application setting!"));
 
                 if (string.IsNullOrEmpty(BackupBlob_ContainerName))
-                    return new BadRequestObjectResult("[BackupBlob_ContainerName] Not found in application setting!");
+                    return new BadRequestObjectResult(string.Format("{\"IsSuccess\":\"0\",\"Message\":\"{0}\"}", "[BackupBlob_ContainerName] Not found in application setting!"));
 
                 #endregion
 
@@ -73,11 +73,11 @@ namespace EnkeltBKB.PowerBI.AzureFun_v2
                 service.RunAll();
                 log.LogInformation("Backup job finished.");
 
-                return new OkObjectResult("Success");
+                return (ActionResult)new OkObjectResult("{\"IsSuccess\":\"1\",\"Message\":\"Job run successfully\"}");
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult($"Backup jobs failed -> Exception Message:{ex.Message}  -> Inner Expetion Message:{ex.InnerException?.Message}!");
+                return (ActionResult)new OkObjectResult(string.Format("{\"IsSuccess\":\"0\",\"Message\":\"{0}\"}", ex.Message));
             }
         }
     }
