@@ -15,9 +15,10 @@ namespace Enkelt.Connector.AzureBlob
         public Operation(string connectionString, string containerName)
         {
             BlobServiceClient = new BlobServiceClient(connectionString);
-            ContainerClient = BlobServiceClient.GetBlobContainerClient(containerName);
-        }
 
+            ContainerClient = BlobServiceClient.GetBlobContainerClient(containerName);
+            ContainerClient.CreateIfNotExists();
+        }
 
         public async Task<Response<BlobContentInfo>> UploadBlobAsync(string localPath, string fileName, Stream file)
         {

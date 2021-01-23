@@ -13,7 +13,6 @@ namespace EnkeltBKB.PowerBI.AzureFun
 {
     public class Backup
     {
-
         public string PowerBI_ClientID { get { return Environment.GetEnvironmentVariable("PowerBI_ClientID"); } }
         public string PowerBI_ClientSecret { get { return Environment.GetEnvironmentVariable("PowerBI_ClientSecret"); } }
         public string PowerBI_TenantId { get { return Environment.GetEnvironmentVariable("PowerBI_TenantId"); } }
