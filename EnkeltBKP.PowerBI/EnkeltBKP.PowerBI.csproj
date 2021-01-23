@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enkelt.Connector.AzureBlob\Enkelt.Connector.AzureBlob.csproj" />
+    <ProjectReference Include="..\Enkelt.Connector.PowerBI\Enkelt.Connector.PowerBI.csproj" />
+  </ItemGroup>
+
+</Project>
