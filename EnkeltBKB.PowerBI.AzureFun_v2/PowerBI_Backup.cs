@@ -11,9 +11,9 @@ using EnkeltBKP.PowerBI.Model;
 
 namespace EnkeltBKB.PowerBI.AzureFun_v2
 {
-    public static class Function1
+    public static class PowerBI_Backup
     {
-        [FunctionName("Function1")]
+        [FunctionName("RunAll")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
