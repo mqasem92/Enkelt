@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnkeltBKP.PowerBI", "Enkelt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnkeltBKB.PowerBI.AzureFun", "EnkeltBKB.PowerBI.AzureFun\EnkeltBKB.PowerBI.AzureFun.csproj", "{97880888-824F-4068-AC46-B5C5626B5635}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnkeltBKB.PowerBI.AzureFun_v2", "EnkeltBKB.PowerBI.AzureFun_v2\EnkeltBKB.PowerBI.AzureFun_v2.csproj", "{3D8090A9-8232-4D05-8695-A228E42B9070}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{97880888-824F-4068-AC46-B5C5626B5635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97880888-824F-4068-AC46-B5C5626B5635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97880888-824F-4068-AC46-B5C5626B5635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D8090A9-8232-4D05-8695-A228E42B9070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D8090A9-8232-4D05-8695-A228E42B9070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D8090A9-8232-4D05-8695-A228E42B9070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D8090A9-8232-4D05-8695-A228E42B9070}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
