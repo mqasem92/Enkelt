@@ -11,7 +11,7 @@ using EnkeltBKP.PowerBI.Model;
 
 namespace EnkeltBKB.PowerBI.AzureFun
 {
-    public class PowerBI_Backup
+    public class Backup
     {
 
         public string PowerBI_ClientID { get { return Environment.GetEnvironmentVariable("PowerBI_ClientID"); } }
