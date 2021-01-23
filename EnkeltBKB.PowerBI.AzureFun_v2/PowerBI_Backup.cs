@@ -11,10 +11,10 @@ using EnkeltBKP.PowerBI.Model;
 
 namespace EnkeltBKB.PowerBI.AzureFun_v2
 {
-    public static class PowerBI_Backup
+    public class PowerBI_Backup
     {
         [FunctionName("RunAll")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
