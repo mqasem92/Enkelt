@@ -13,39 +13,72 @@ namespace EnkeltBKB.PowerBI.AzureFun_v2
 {
     public class PowerBI_Backup
     {
+
+        public string PowerBI_ClientID { get { return Environment.GetEnvironmentVariable("PowerBI_ClientID"); } }
+        public string PowerBI_ClientSecret { get { return Environment.GetEnvironmentVariable("PowerBI_ClientSecret"); } }
+        public string PowerBI_TenantId { get { return Environment.GetEnvironmentVariable("PowerBI_TenantId"); } }
+        public string BackupBlob_ConnectionString { get { return Environment.GetEnvironmentVariable("BackupBlob_ConnectionString"); } }
+        public string BackupBlob_ContainerName { get { return Environment.GetEnvironmentVariable("BackupBlob_ContainerName"); } }
+        public string BackupBlob_FolderName { get { return Environment.GetEnvironmentVariable("BackupBlob_FolderName"); } }
+
+
         [FunctionName("RunAll")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            //string name = req.Query["name"];
+            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            //dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string name = req.Query["name"];
+            try
+            {
+                log.LogInformation("C# HTTP trigger function [RunAll] processed a request.");
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+                #region Validation
 
+                log.LogInformation("Start validation application settings.");
 
+                if (string.IsNullOrEmpty(PowerBI_ClientID))
+                    return new BadRequestObjectResult("[PowerBI_ClientID] Not found in application setting!");
 
-            PowerBIConnection powerBIConnection = new PowerBIConnection("6a71ae02-04e2-4f2f-9cf1-a5a3912121f4", "DRh?Z[@4Crm3v9fdDwyXh=HBpfbb04mR", "7ddcd412-aa67-423e-b6d7-8a90efbeeeb9");
-            AzureBlobConnection azureBlobConnection = new AzureBlobConnection("DefaultEndpointsProtocol=https;AccountName=ikeabackup01;AccountKey=4Sf/99+rdVEQwgefpHhzK8JL45Qg729voTXxrnUr4OHwLz8sWNwHeGVZ/XEbSxL3Mb5QW/N2vO9fWqFFPizsZA==;EndpointSuffix=core.windows.net", "powerbi-backup");
+                if (string.IsNullOrEmpty(PowerBI_ClientSecret))
+                    return new BadRequestObjectResult("[PowerBI_ClientSecret] Not found in application setting!");
 
-            BackupConfiguration backupConfiguration = new BackupConfiguration();
-            backupConfiguration.Folder = "IKEA PowerBI Backup";
-            backupConfiguration.AddTimePostfix = false;
+                if (string.IsNullOrEmpty(PowerBI_TenantId))
+                    return new BadRequestObjectResult("[PowerBI_TenantId] Not found in application setting!");
 
-            EnkeltBKP.PowerBI.Service service = new EnkeltBKP.PowerBI.Service(backupConfiguration, powerBIConnection, azureBlobConnection);
-            service.RunAll();
+                if (string.IsNullOrEmpty(BackupBlob_ConnectionString))
+                    return new BadRequestObjectResult("[BackupBlob_ConnectionString] Not found in application setting!");
 
-            Console.WriteLine("Done Upload!");
+                if (string.IsNullOrEmpty(BackupBlob_ContainerName))
+                    return new BadRequestObjectResult("[BackupBlob_ContainerName] Not found in application setting!");
 
+                #endregion
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+                log.LogInformation("Init PowerBI connection settings.");
+                PowerBIConnection powerBIConnection = new PowerBIConnection(PowerBI_ClientID, PowerBI_ClientSecret, PowerBI_TenantId);
 
-            return new OkObjectResult(responseMessage);
+                log.LogInformation("Init Azure Blob Storage connection settings.");
+                AzureBlobConnection azureBlobConnection = new AzureBlobConnection(BackupBlob_ConnectionString, BackupBlob_ContainerName);
+
+                log.LogInformation("Set required backup configuration.");
+                BackupConfiguration backupConfiguration = new BackupConfiguration();
+
+                if (!string.IsNullOrEmpty(BackupBlob_FolderName))
+                    backupConfiguration.Folder = BackupBlob_FolderName;
+
+                log.LogInformation("Backup job get started.");
+                EnkeltBKP.PowerBI.Service service = new EnkeltBKP.PowerBI.Service(backupConfiguration, powerBIConnection, azureBlobConnection);
+                service.RunAll();
+                log.LogInformation("Backup job finished.");
+
+                return new OkObjectResult("Success");
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult($"Backup jobs failed -> Exception Message:{ex.Message}  -> Inner Expetion Message:{ex.InnerException?.Message}!");
+            }
         }
     }
 }
